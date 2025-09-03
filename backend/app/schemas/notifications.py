@@ -2,10 +2,16 @@ from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional
 from enum import Enum
+from sqlmodel import SQLModel
 
 
 class NotificationStatus(str, Enum):
     EM_ANDAMENTO = "Em Andamento"
+    VALIDACAO = "Em Validação"
+    CONCLUIDO = "Concluído"
+
+
+class StatusUpdateNotification(str, Enum):
     VALIDACAO = "Em Validação"
     CONCLUIDO = "Concluído"
 
@@ -30,8 +36,11 @@ class NotificationCreate(BaseModel):
     audience: datetime
 
 
-class NotificationUpdate(BaseModel):
-    notified: NotifiedCreate
+class NotificationUpdate(SQLModel):
+    title: str | None = None
+    description: str | None = None
+    audience: datetime | None = None
+    status: StatusUpdateNotification | None = None
 
 
 class NotificationRead(BaseModel):

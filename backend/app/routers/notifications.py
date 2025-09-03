@@ -37,8 +37,8 @@ def get_notification(session: Session = Depends(get_session)):
     return notifications
 
 
-@router.patch("/{notification_id}/")
-def update_notification(
+@router.patch("/{notification_id}/insert_notified/")
+def insert_notified(
     notification_id: int,
     notified: NotifiedCreate,
     session: Session = Depends(get_session),
@@ -60,12 +60,32 @@ def update_notification(
     return {"detail": "Dados do notificado inseridos com sucesso na notificação."}
 
 
+@router.patch("/{notification_id}/")
+def update_notification(
+    notification_id: int,
+    updated_data: NotificationUpdate,
+    session: Session = Depends(get_session),
+):
+    notification = session.get(Notification, notification_id)
+    if not notification:
+        raise HTTPException(status_code=404, detail="Notificação não encontrada")
+
+    data = updated_data.model_dump(exclude_unset=True)
+    notification.sqlmodel_update(data)
+    session.add(notification)
+    session.commit()
+    session.refresh(notification)
+    return {"detail": "Dados da notificação alterados com sucesso."}
+
+
 @router.delete("/{notification_id}/")
 def delete_notification(notification_id: int, session: Session = Depends(get_session)):
     notification = session.get(Notification, notification_id)
     if not notification:
         raise HTTPException(status_code=404, detail="Notificação não encontrada")
 
+    if notification.notified:
+        session.delete(notification.notified)
     session.delete(notification)
     session.commit()
     return {"detail": "Notificação deletada com sucesso!"}
@@ -77,8 +97,8 @@ def delete_notified(notification_id: int, session: Session = Depends(get_session
     if not notification:
         raise HTTPException(status_code=404, detail="Notificação não encontrada")
 
-    notification.notified = None
-    session.add(notification)
+    if notification.notified:
+        session.delete(notification.notified)
     session.commit()
     session.refresh(notification)
     return {"detail": "Notificado removido da notificação"}

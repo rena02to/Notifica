@@ -1,12 +1,12 @@
 from sqlmodel import SQLModel, Field, Relationship
-from datetime import datetime, timezone
+from datetime import datetime
 from enum import Enum
 from typing import List, Optional
-import pytz
+from pytz import timezone
 from sqlalchemy import TIMESTAMP
 
 
-SP_TZ = pytz.timezone("America/Sao_Paulo")
+SP_TZ = timezone("America/Sao_Paulo")
 
 
 class NotificationStatus(str, Enum):
@@ -41,9 +41,9 @@ class Notification(SQLModel, table=True):
     status: NotificationStatus = Field(
         default=NotificationStatus.VALIDACAO.value,
     )
-    created_at: datetime = Field(
-        default_factory=lambda: datetime.now(SP_TZ), nullable=False
-    )
-    updated_at: datetime | None = Field(
-        default_factory=lambda: datetime.now(SP_TZ), nullable=False
+    created_at: datetime = Field(default_factory=lambda: datetime.now(SP_TZ))
+    updated_at: Optional[datetime] = Field(
+        default=None,
+        sa_column_kwargs={"onupdate": lambda: datetime.now(SP_TZ)},
+        nullable=True,
     )

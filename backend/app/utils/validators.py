@@ -30,7 +30,7 @@ def validate_notified(notified: NotifiedCreate):
     email = notified.email
     telephone = notified.telephone
     email_format = r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9._%+-]+\.[a-zA-Z]"
-    telephone_format = r"^\(\d{2}\)\s?9?\s?\d{4,5}-\d{4}$"
+    telephone_format = r"^\(\d{2}\)\s?9?\d{4,5}-\d{4}$"
 
     if len(name.split()) < 2:
         raise HTTPException(
