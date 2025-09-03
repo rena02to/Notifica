@@ -54,8 +54,8 @@ Antes de começar, certifique-se de ter instalado na sua máquina:
 Abra o terminal e execute:
 
 ```bash
-git clone <URL_DO_REPOSITORIO>
-cd <NOME_DA_PASTA_DO_PROJETO>
+git clone https://github.com/rena02to/Notifica.git
+cd Notifica
 ```
 
 ## Passo 2: Editando as variáveis de ambiente
