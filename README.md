@@ -89,8 +89,8 @@ Isso:
 
 ## Passo 4: Acessar a aplicação
 Após o comando acima finalizar, a aplicação estará disponível nos seguintes endereços:
-- Frontend React: http://localhost:3000
-- API Backend: http://localhost:8000/api/
+- Frontend React: [http://localhost:3000](http://localhost:3000)
+- API Backend: [http://localhost:8000/](http://localhost:8000/)
 
 
 # Decisões técnicas
@@ -101,3 +101,4 @@ Após o comando acima finalizar, a aplicação estará disponível nos seguintes
 # Dicas de uso
 - Para confirmar se há informações pendentes ou não, clicar no status (disponível somente quando o status é "Em Validação")
 - O notificado só pode ser editado pela confirmação de dados pendentes (clicando em "Sim" para o questionamento "Há dados pendentes?")
+- Para ver os endpoints disponíveis use ([http://localhost:8000/docs](http://localhost:8000/docs))
