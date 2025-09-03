@@ -35,6 +35,7 @@ Campos para resposta: “Necessita de informações adicionais?”
 ![PostgreSQL](https://skillicons.dev/icons?i=postgres "PostgreSQ")
 ![React](https://skillicons.dev/icons?i=react "React")
 ![Next](https://skillicons.dev/icons?i=next "Next")
+![Docker](https://skillicons.dev/icons?i=docker "Docker")
 
 
 # Rodando Localmente
