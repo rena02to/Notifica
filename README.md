@@ -1,7 +1,7 @@
 # Objetivo do projeto
 
 Implementar um sistema simples de Notificação Judicial com base no fluxo fornecido:
-
+<img width="1129" height="703" alt="image" src="https://github.com/user-attachments/assets/cc40dffa-a422-4607-bc7f-2ce1b788564c" />
 1. Criar uma notificação judicial (status inicial Em Andamento).
 
 Nesta etapa deve-se criar uma notificação judicial no banco de dados com o status inicial de Em Andamento
@@ -83,9 +83,20 @@ Isso:
 1. Baixar as imagens necessárias do Docker Hub.
 2. Construir o backend e frontend.
 3. Inicializar o banco de dados PostgreSQL.
-4. Rodar o servidor FastAPI (backend) e React (frontend)
+4. Aplicar as migrations no banco de dados.
+5. Rodar o servidor FastAPI (backend) e React (frontend)
 
 ## Passo 4: Acessar a aplicação
 Após o comando acima finalizar, a aplicação estará disponível nos seguintes endereços:
 - Frontend React: http://localhost:3000
 - API Backend: http://localhost:8000/api/
+
+
+# Decisões técnicas
+- Frontend: React + TS, SCSS modules, MUI, Formik, Yup, Toastify, máscaras customizadas, UX com popups e botões com feedback (visando boas práticas de usabilidade, UX simples e responsiva).
+- Backend: FastAPI + Pydantic v2, schemas bem definidos, serialização de datas em formato brasileiro, computed fields extras (visando padronização de dados e formatos claros e consistentes).
+- Infra: Docker para padronizar o ambiente (visando facilidade de entrega e execução via Docker).
+
+# Dicas de uso
+- Para confirmar se há informações pendentes ou não, clicar no status (disponível somente quando o status é "Em Validação")
+- O notificado só pode ser editado pela confirmação de dados pendentes (clicando em "Sim" para o questionamento "Há dados pendentes?")
