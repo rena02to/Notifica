@@ -39,7 +39,7 @@ class Notification(SQLModel, table=True):
     )
     notified: Optional[Notified] = Relationship(back_populates="notifications")
     status: NotificationStatus = Field(
-        default=NotificationStatus.VALIDACAO.value,
+        default=NotificationStatus.EM_ANDAMENTO.value,
     )
     created_at: datetime = Field(default_factory=lambda: datetime.now(SP_TZ))
     updated_at: Optional[datetime] = Field(

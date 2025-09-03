@@ -99,7 +99,7 @@
     }
 }
 
-.poupupNotification, .poupupNotified{
+.poupupNotification, .poupupNotified, .pendingInfo{
     &{
         display: flex;
         position: fixed;
@@ -113,12 +113,13 @@
         height: 100%;
         overflow: hidden;
     }
-    form{
+    form, .div{
         &{
             width: 500px;
             background-color: white;
             padding: 15px 25px;
             border-radius: 10px;
+            position: relative;
         }
         .title{
             font-size: 25px;
@@ -126,6 +127,12 @@
             margin: 0;
             margin-bottom: 10px;
             font-weight: 500;
+        }
+        .buttons{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
         }
     }
 }

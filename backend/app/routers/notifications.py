@@ -44,7 +44,7 @@ def insert_notified(
     session: Session = Depends(get_session),
 ):
     notification = session.get(Notification, notification_id)
-    if not notification:
+    if not notification or notification.status != "Em Andamento":
         raise HTTPException(status_code=404, detail="Notificação não encontrada")
 
     notified = validate_notified(notified)
@@ -54,6 +54,7 @@ def insert_notified(
     session.add(new_notified)
 
     notification.notified = new_notified
+    notification.status = "Em Validação"
     session.add(notification)
     session.commit()
     session.refresh(notification)
@@ -67,7 +68,7 @@ def update_notification(
     session: Session = Depends(get_session),
 ):
     notification = session.get(Notification, notification_id)
-    if not notification:
+    if not notification or notification.status == "Concluído":
         raise HTTPException(status_code=404, detail="Notificação não encontrada")
 
     data = updated_data.model_dump(exclude_unset=True)
@@ -91,14 +92,32 @@ def delete_notification(notification_id: int, session: Session = Depends(get_ses
     return {"detail": "Notificação deletada com sucesso!"}
 
 
-@router.delete("/{notification_id}/notified/")
-def delete_notified(notification_id: int, session: Session = Depends(get_session)):
+@router.patch("/notified/{notified_id}/")
+def update_notified(
+    notified_id: int,
+    updated_data: NotifiedCreate,
+    session: Session = Depends(get_session),
+):
+    notified = session.get(Notified, notified_id)
+    if not notified:
+        raise HTTPException(status_code=404, detail="Notificado não encontrada")
+
+    data = updated_data.model_dump(exclude_unset=True)
+    notified.sqlmodel_update(data)
+    session.add(notified)
+    session.commit()
+    session.refresh(notified)
+    return {"detail": "Dados do notificado alterados com sucesso."}
+
+
+@router.patch("/finish/{notification_id}/")
+def finish_notified(notification_id: int, session: Session = Depends(get_session)):
     notification = session.get(Notification, notification_id)
-    if not notification:
+    if not notification or notification.status == "Concluído":
         raise HTTPException(status_code=404, detail="Notificação não encontrada")
 
-    if notification.notified:
-        session.delete(notification.notified)
+    notification.status = "Concluído"
+    session.add(notification)
     session.commit()
     session.refresh(notification)
     return {"detail": "Notificado removido da notificação"}
